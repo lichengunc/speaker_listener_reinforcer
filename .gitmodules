@@ -1,0 +1,6 @@
+[submodule "pyutils/refer"]
+	path = pyutils/refer
+	url = https://github.com/lichengunc/refer.git
+[submodule "pyutils/refer2"]
+	path = pyutils/refer2
+	url = https://github.com/lichengunc/refer2.git
