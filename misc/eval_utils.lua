@@ -115,7 +115,7 @@ function eval_utils.language_eval(predictions, split, opt)
 	local result_path = path.join('cache', 'lang', opt.dataset, file_name..'.json')
 	utils.write_json(result_path, {predictions = predictions})
 	-- call python to evaluate each sent with ground-truth sentences
-	os.execute('python pyutils/python_eval_lang.py' .. 
+	os.execute('python pyutils/python_eval_lang_new.py' .. 
 		' --dataset ' .. opt.dataset ..
 		' --model_id ' .. opt.id .. 
 		' --beam_size ' .. opt.beam_size ..
