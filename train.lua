@@ -190,7 +190,7 @@ end
 local lm_crits = {}
 local lm_crits = nn.ParallelCriterion()
 lm_crits:add(nn.LanguageModelCriterion(), opt.generation_weight) -- generation path
-lm_crits:add(nn.TripletRankingCriterion(opt.lm_margin), opt.vis_rank_weight)  -- vis rank path
+lm_crits:add(nn.TripletRankingCriterion(opt.lm_margin), opt.vis_rank_weight/opt.sample_ratio)  -- vis rank path
 lm_crits:add(nn.TripletRankingCriterion(opt.lm_margin), opt.lang_rank_weight) -- lang rank path
 
 local emb_crits = nn.ParallelCriterion()
@@ -263,6 +263,29 @@ print('total number of parameters in BS: ', bs_params:nElement())
 
 collectgarbage()
 -------------------------------------------------------------------------------
+-- Mask function
+-------------------------------------------------------------------------------
+-- used for masking out vis_rank over different type objects.
+-- we sample neg_ann_ids from st_type and dt_type objects.
+-- random sampling from both could benefit comprehension on gd-truth objects
+-- but deteriorate comprehension on detected objects [quite a bit].
+-- Interestingly, if we mask out the dt_type objects, it can maintain the performance
+-- on detected objects; but only worsen gd-objects comprehension a bit.
+function mask_vis_rank(vis_rank_flow, neg_flags)
+	-- vis_rank_flow: {logP([paired]), logP([vis_unpaired])}, each is float (L, N, Mp1)
+	-- neg_flags      : list containing N 0's or 1's
+	assert(#vis_rank_flow == 2)
+	assert(vis_rank_flow[1]:size(2) == #neg_flags)
+	-- mask 0 parts
+	local ids = {}
+	for i, flag in ipairs(neg_flags) do
+		if flag == 0 then table.insert(ids, i) end  -- flag = 0 indicates neg_ann_id from dt_type
+	end
+	ids = torch.LongTensor(ids)
+	vis_rank_flow[1]:indexFill(2, ids, 0)
+	vis_rank_flow[2]:indexFill(2, ids, 0)
+end
+-------------------------------------------------------------------------------
 -- Loss function
 -------------------------------------------------------------------------------
 loader:shuffle('train')
@@ -284,6 +307,7 @@ local function lossFun(iter)
 	local ref_ann_ids = data.ref_ann_ids
 	local pos_feats = data.feats
 	local neg_feats = data.neg_feats
+	local neg_flags = data.neg_flags
 	local pos_seqz  = data.seqz
 	local pos_zseq  = data.zseq
 	local neg_seqz  = data.neg_seqz
@@ -336,6 +360,7 @@ local function lossFun(iter)
 
 	-- backward crits
 	local dlm_flows  = lm_crits:backward(lm_flows, lm_labels)
+	mask_vis_rank(dlm_flows[2], neg_flags)
 	local dlogprobs  = protos.split_lm:backward(logprobs, dlm_flows)
 	local demb_flows = emb_crits:backward(emb_flows, emb_labels)
 	local dcossim    = protos.split_emb:backward(cossim, demb_flows)

@@ -225,10 +225,10 @@ function DataLoader:getBatch(split, opt)
 	local seqz = self:fetch_seqs(batch_sent_ids, {pad_zero = 'end'})
 	local zseq = self:fetch_seqs(batch_sent_ids, {pad_zero = 'front'})
 
-	local neg_ann_ids, neg_sent_ids, neg_feats, neg_seqz, neg_zseq
+	local neg_ann_ids, neg_sent_ids, neg_feats, neg_seqz, neg_zseq, neg_flags
 	if sample_neg > 0 then
 		-- sample neg ids
-		neg_ann_ids, neg_sent_ids = self:sample_neg_ids(batch_ann_ids, opt)
+		neg_ann_ids, neg_sent_ids, neg_flags = self:sample_neg_ids(batch_ann_ids, opt)
 
 		-- fetch neg feats
 		neg_feats = self:fetch_feats(neg_ann_ids, 1, opt) 
@@ -245,6 +245,7 @@ function DataLoader:getBatch(split, opt)
 	data.seqz = seqz
 	data.zseq = zseq
 	data.neg_ann_ids = neg_ann_ids
+	data.neg_flags = neg_flags
 	data.neg_sent_ids = neg_sent_ids
 	data.neg_feats = neg_feats
 	data.neg_seqz = neg_seqz
@@ -255,58 +256,33 @@ end
 -- sample neg_ann_ids, neg_sent_ids
 function DataLoader:sample_neg_ids(pos_ann_ids, opt)
 
-	local mine_hard = utils.getopt(opt, 'mine_hard')
-	mine_hard = (mine_hard > 0) and (self.Graphs ~= nil)
-	local hard_temperature = utils.getopt(opt, 'hard_temperature', 5)
-
 	-- sample neg_ann_ids
 	local neg_ann_ids, neg_sent_ids = {}, {}
+	local neg_flags = {}
 	for i, pos_ann_id in ipairs(pos_ann_ids) do
 
 		-- prepare same-type, dif-type ann_ids, ref_ids
 		local st_ref_ids, st_ann_ids, dt_ref_ids, dt_ann_ids = self:fetch_neighbour_ids(pos_ann_id)
 
-		-- prepare cand_cossim for this pos_ann_id if mine_hard
-		local cand_ann_ids, cand_cossim = {}, {}
-		if mine_hard then
-			local image_id = self.Anns[pos_ann_id].image_id
-			local graph = self.Graphs[image_id]
-			local img_ann_ids = graph['ann_ids']
-			local rix = utils.index(img_ann_ids, pos_ann_id)	
-			-- check cossim for for pos_ann_id
-			for k, ann_id in ipairs(img_ann_ids) do
-				if ann_id ~= pos_ann_id then
-					table.insert(cand_ann_ids, ann_id)
-					table.insert(cand_cossim, graph['cossim'][rix][k])
-				end
-			end
-			cand_cossim = torch.FloatTensor(cand_cossim)  	 -- convert to tensor
-			cand_cossim = cand_cossim * hard_temperature   	 -- scaled by hard_temperature
-			cand_cossim = nn.SoftMax():forward(cand_cossim)  -- normalize by softmax
-		end
-
 		-- sample seq_per_ref neg ids for each pos id
 		for k = 1, opt.seq_per_ref do
 
-			if mine_hard then
-				local it = torch.multinomial(cand_cossim, 1)[1]  -- multinomial sampling
-				neg_ann_id = cand_ann_ids[it]
-				table.insert(neg_ann_ids, neg_ann_id)	
+			-- neg_ann_id for negative visual representation: randomly choose from same-type objects
+			local neg_ann_id
+			if #st_ann_ids > 0 and torch.uniform() < opt.sample_ratio then
+				local ix = torch.random(1, #st_ann_ids)
+				neg_ann_id = st_ann_ids[ix]
+				table.insert(neg_flags, 1)
+			elseif #dt_ann_ids > 0 then
+				local ix = torch.random(1, #dt_ann_ids)
+				neg_ann_id = dt_ann_ids[ix]
+				table.insert(neg_flags, 0)
 			else
-				-- neg_ann_id for negative visual representation: randomly choose from same-type objects
-				local neg_ann_id
-				if #st_ann_ids > 0 and torch.uniform() < opt.sample_ratio then
-					local ix = torch.random(1, #st_ann_ids)
-					neg_ann_id = st_ann_ids[ix]
-				elseif #dt_ann_ids > 0 then
-					local ix = torch.random(1, #dt_ann_ids)
-					neg_ann_id = dt_ann_ids[ix]
-				else
-					local ix = torch.random(1, #self.anns)	
-					neg_ann_id = self.anns[ix].ann_id
-				end
-				table.insert(neg_ann_ids, neg_ann_id)
+				local ix = torch.random(1, #self.anns)	
+				neg_ann_id = self.anns[ix].ann_id
+				table.insert(neg_flags, 0)
 			end
+			table.insert(neg_ann_ids, neg_ann_id)
 
 			-- neg_sent_id for negative sentences: sentence mainly from same-type "referred" objects
 			if #st_ref_ids > 0 and torch.uniform() < opt.sample_ratio then
@@ -325,7 +301,7 @@ function DataLoader:sample_neg_ids(pos_ann_ids, opt)
 		end
 	end
 	-- return
-	return neg_ann_ids, neg_sent_ids
+	return neg_ann_ids, neg_sent_ids, neg_flags
 end
 -- fetch feats = {cxt_feats, ann_feats, lfeats, dif_ann_feats, dif_lfeats}
 function DataLoader:fetch_feats(batch_ann_ids, expand_size, opt)
