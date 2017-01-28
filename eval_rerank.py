@@ -16,7 +16,7 @@ We will penalize same expression on different object using cplex.
 Before running this code, run
 1) th eval_lang.lua -id xx -split val -beam_size 10 -dataset xxx
 2) th scripts/compute_beam_score.lua -id xx -split val -dataset xxx
-3) python eval_rerank.py --dataset xxx --split testA --model_id 0
+3) python eval_rerank.py --dataset xxx --split testA --model_id 0 --write_result 1
 
 The generated sentences are in cache/lang/dataset/id_val_beam10.json
 The confusion scores are in cache/lang/dataset/id_val_beam10_confusion.json
@@ -45,6 +45,9 @@ def main(params):
 	elif params['dataset'] == 'refcoco+':
 		lambda1 = 5
 		lambda2 = 5
+	elif params['dataset'] == 'refcocog':
+		lambda1 = 5
+		lambda2 = 5
 	else:
 		error('No such dataset option for ', params['dataset'])
 
@@ -60,7 +63,7 @@ def main(params):
 	info = json.load(open(info_path))
 	img_to_ref_confusion = info['img_to_ref_confusion']  # careful, key in string format
 	img_to_ref_ids = info['img_to_ref_ids']   			 # careful, key in string format
-
+	
 	# make ref_to_beams
 	ref_to_beams = {item['ref_id']: item['beams'] for item in data}
 
@@ -99,6 +102,16 @@ def main(params):
 	for metric, score in refEval.eval.items():
 		overall[metric] = score
 	print overall
+
+	if params['write_result'] > 0:
+		file_name = params['model_id']+'_'+params['split']+'_beamrerank.json'
+		result_path = osp.join('cache', 'lang', params['dataset']+'_'+params['splitBy'], file_name)
+		refToEval = refEval.refToEval
+		for res in Res:
+			ref_id, sent = res['ref_id'], res['sent']
+			refToEval[ref_id]['sent'] = sent
+		with open(result_path[:-5] + '_out.json', 'w') as outfile:
+			json.dump({'overall': overall, 'refToEval': refToEval}, outfile)
 
 	# CrossEvaluation takes as input [{ref_id, sent}]
 	ceval = CrossEvaluation(refer, Res)
@@ -335,6 +348,7 @@ if __name__ == '__main__':
 	parser.add_argument('--split', default='testA')
 	parser.add_argument('--model_id', default='0')
 	parser.add_argument('--beam_size', default='10', type=str)
+	parser.add_argument('--write_result', default=1, help='write result into cache_path')
 	parser.add_argument('--refer_dir', default='new_data', help='data or new_data, refer directory that stores annotations.')
 
 	# argparse
