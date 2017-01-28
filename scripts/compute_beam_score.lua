@@ -144,7 +144,7 @@ for image_id, img_ref_ids in pairs(img_to_ref_ids) do
 		score = utils.tensor_to_table(score)  -- (beam_size, #img_ref_ids)
 
 		-- add to img_to_ref_confusion
-		img_to_ref_confusion[image_id][ref_id] = score
+		img_to_ref_confusion[image_id][tostring(ref_id)] = score  -- use tostring to avoid ascii issue, don't know why...
 	end
 end
 
