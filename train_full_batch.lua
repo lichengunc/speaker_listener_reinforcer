@@ -235,7 +235,7 @@ local sub_embedding = net_utils.extract_sub_embedding(protos)
 -------------------------------------------------------------------------------
 -- create reinforce parts
 local rl_lm = nn.ReinforceLanguage(protos.lm, opt.temperature)
-rl_lm:training()  -- we want this to be more deterministic
+rl_lm:evaluate()  -- we want this to be more deterministic
 
 -- load pretrained vl_metric_model
 local vl_metric_model_path = path.join('models/vl_metric_models', opt.dataset, 'model_id' .. opt.vl_metric_model_id .. '.t7')
