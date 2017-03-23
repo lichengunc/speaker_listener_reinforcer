@@ -101,13 +101,13 @@ python scripts/extract_det_feats.lua -dataset refcoco_unc
 th eval_dets.lua -dataset refcoco_unc -split testA
 ```
 
-* Results
-| System | testA | testB | Number of Boxes | Input resolution
+| System | VOC2007 test *mAP* | **FPS** (Titan X) | Number of Boxes | Input resolution
 |:-------|:-----:|:-------:|:-------:|:-------:|
 | [Faster R-CNN (VGG16)](https://github.com/ShaoqingRen/faster_rcnn) | 73.2 | 7 | ~6000 | ~1000 x 600 |
 | [YOLO (customized)](http://pjreddie.com/darknet/yolo/) | 63.4 | 45 | 98 | 448 x 448 |
 | SSD300* (VGG16) | 77.2 | 46 | 8732 | 300 x 300 |
 | SSD512* (VGG16) | **79.8** | 19 | 24564 | 512 x 512 |
+
 
 
 TODO
