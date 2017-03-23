@@ -123,7 +123,7 @@ TODO
 Note, I haven't figured out a way for extracting refclef_berkely's features as torch's hdf5 does not support partial writing. To be investigated...
 * automatic generation given image
 Current code only support referring expression geneneration given ground-truth bounding-box (with label). It shouldn't take too much effort to finish this. Just add some more functions inside DetsLoader.lua
-
+* upload all pre-trained models
 
 
 
