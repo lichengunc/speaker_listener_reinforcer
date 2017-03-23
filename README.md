@@ -106,6 +106,7 @@ Pretrained models on RefCOCO (UNC)
 We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcoco_unc.zip). Specifically they are trained using
 * no_rank: ``th train.lua -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
 * 0: ``th train.lua -id 0 -vis_rank_weight 1 -lang_rank_weight 0.1``
+
 | System | testA | testB | 
 |:-------|:-----:|:-------:|
 | no_rank (speaker) | 71.10\% | 74.01\% |
