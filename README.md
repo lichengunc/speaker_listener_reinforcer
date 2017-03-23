@@ -70,9 +70,19 @@ and finally ``model = 2'' denotes using the ensemble of speaker and listener mod
 
 * Referring expression generation:
 ```shell
-th eval_lang.lua -dataset refcoco_unc -split testA -beam_size 1
+th eval_lang.lua -dataset refcoco_unc -split testA
 ```
 Note, we have two testing splits, i.e., testA and testB for RefCOCO and RefCOCO+, if you are using UNC's split.
+
+* Referring expressoin generation using unary and pairwise potentions.
+```shell
+th eval_lang.lua -dataset refcoco_unc -split testA -beam_size 10 -id xxx  # generate 10 sentences for each ref
+th scripts/compute_beam_score.lua -id xx -split testA -dataset xxx  # compute cross (ref, sent) score
+python eval_rerank.py --dataset xxx --split testA --model_id xxx --write_result 1  # call CPLEX to solve dynamic programming problem
+```
+You need to have IBM CPLEX installed in your machine. First run ``eval_lang.lua`` with beam_size 10, then call ``compute_beam_score.lua`` to compute cross (ref, sent) scores, finally call ``eval_rerank.py`` to pick the sentences with highest score.
+For more details, check ``eval_rerank.py``
+
 
 Fully automatic comprehension using detection/proposal
 ====
@@ -90,6 +100,15 @@ python scripts/extract_det_feats.lua -dataset refcoco_unc
 ```shell
 th eval_dets.lua -dataset refcoco_unc -split testA
 ```
+
+* Results
+| System | testA | testB | Number of Boxes | Input resolution
+|:-------|:-----:|:-------:|:-------:|:-------:|
+| [Faster R-CNN (VGG16)](https://github.com/ShaoqingRen/faster_rcnn) | 73.2 | 7 | ~6000 | ~1000 x 600 |
+| [YOLO (customized)](http://pjreddie.com/darknet/yolo/) | 63.4 | 45 | 98 | 448 x 448 |
+| SSD300* (VGG16) | 77.2 | 46 | 8732 | 300 x 300 |
+| SSD512* (VGG16) | **79.8** | 19 | 24564 | 512 x 512 |
+
 
 TODO
 ====
