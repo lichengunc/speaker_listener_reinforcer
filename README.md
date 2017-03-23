@@ -103,12 +103,12 @@ th eval_dets.lua -dataset refcoco_unc -split testA
 
 | System | testA | testB | 
 |:-------|:-----:|:-------:|
-| no_rank (speaker) | 69.98\% | 73.66\% |
-| no_rank (listener) | 77.50\% | 79.31\% |
-| no_rank (ensemble) | 78.26\% | 80.67\% |
-| 0 (speaker)  | 77.78\% | 79.90\% | 
-| 0 (listener) | 78.45\% | 79.94\% |
-| 0 (ensemble) | 79.81\% | 81.81\% |
+| no_rank (speaker) | 71.10\% | 74.01\% |
+| no_rank (listener) | 76.91\% | 80.10\% |
+| no_rank (ensemble) | 78.01\% | 80.65\% |
+| 0 (speaker)  | 78.95\% | 80.22\% |
+| 0 (listener) | 77.97\% | 79.86\% |
+| 0 (ensemble) | 80.08\% | 81.73\% |
 
 
 TODO
