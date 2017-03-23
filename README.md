@@ -101,13 +101,14 @@ python scripts/extract_det_feats.lua -dataset refcoco_unc
 th eval_dets.lua -dataset refcoco_unc -split testA
 ```
 
-| System | VOC2007 test *mAP* | **FPS** (Titan X) | Number of Boxes | Input resolution
-|:-------|:-----:|:-------:|:-------:|:-------:|
-| [Faster R-CNN (VGG16)](https://github.com/ShaoqingRen/faster_rcnn) | 73.2 | 7 | ~6000 | ~1000 x 600 |
-| [YOLO (customized)](http://pjreddie.com/darknet/yolo/) | 63.4 | 45 | 98 | 448 x 448 |
-| SSD300* (VGG16) | 77.2 | 46 | 8732 | 300 x 300 |
-| SSD512* (VGG16) | **79.8** | 19 | 24564 | 512 x 512 |
-
+| System | testA | testB | 
+|:-------|:-----:|:-------:|
+| no_rank (speaker) | 69.98\% | 73.66\% |
+| no_rank (listener) | 77.50\% | 79.31\% |
+| no_rank (ensemble) | 78.26\% | 80.67\% |
+| 0 (speaker)  | 77.78\% | 79.90\% | 
+| 0 (listener) | 78.45\% | 79.94\% |
+| 0 (ensemble) | 79.81\% | 81.81\% |
 
 
 TODO
