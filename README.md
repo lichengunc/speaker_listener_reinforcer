@@ -46,18 +46,18 @@ Make sure features are extracted - check if there exists ``ann_feats.h5`` and ``
 
 First, let's do reward function training, the ``vlsim'' here means "visual-language similarity". The learned model will be used for evaluating similarity score in the reinforcer.
 ```shell
-th scripts/train_vlsim.lua -dataset refcoco_unc -id vlsim_model_xxx
+th scripts/train_vlsim.lua -dataset refcoco_unc -id vlsim_xxx
 ```
 Then we start training the joint model
 ```shell
-th train.lua 
+th train.lua -vl_metric_model_id vlsim_xxx
 ```
 
 We also provide options for training triplet loss.
 There are two types of triplet loss:
 * paired (ref_object, ref_expression) over unpaired (other_object, ref_expression), where other_object is mined from same image and perhaps same-category objects.
 ```shell
-th train.lua -vis_rank_weight 1 -vl_metric_model_id vlsim_model_xxx
+th train.lua -vis_rank_weight 1
 ```
 * paired (ref_object, ref_expression) over unpaired (ref_object, other_expression).
 ```shell
