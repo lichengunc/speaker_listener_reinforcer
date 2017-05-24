@@ -109,6 +109,10 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 * no_rank: ``th train.lua -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
 * 0: ``th train.lua -id 0 -vis_rank_weight 1 -lang_rank_weight 0.1``
 
+<table>
+<tr><th> Ground-truth Box </th><th> Detected Regions(ssd) </th></tr>
+<tr><td>
+
 | System | testA | testB | 
 |:-------|:-----:|:-------:|
 | no_rank (speaker) | 71.10\% | 74.01\% |
@@ -116,7 +120,18 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 | no_rank (ensemble) | 78.01\% | 80.65\% |
 | 0 (speaker)  | 78.95\% | 80.22\% |
 | 0 (listener) | 77.97\% | 79.86\% |
-| 0 (ensemble) | 80.08\% | 81.73\% |
+| 0 (ensemble 0.2) | 80.08\% | 81.73\% |
+</td><td>
+
+| model | test A | test B |
+|--|--|--|
+| no_rank (speaker) | 69.15\% | 61.96\% |
+| no_rank (listener) | 72.65\% | 64.38\% |
+| no_rank (ensemble 0.2) | 72.78\% | 64.38\% |
+| 0 (speaker)  | 72.88\% | 63.43\% |
+| 0 (listener) | 72.94\% | 62.98\% |
+| 0 (ensemble 0.2) | 73.78\% | 63.83\% |
+</td></tr> </table>
 
 Pretrained models on RefCOCO+ (UNC)
 ====
@@ -132,44 +147,20 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 |--|--|--|
 | no_rank (speaker) | 57.46\% | 53.71\% |
 | no_rank (listener) | 63.34\% | 58.42\% |
-| no_rank (ensemble) | 64.02\% | 59.19\% |
+| no_rank (ensemble 0.3) | 64.02\% | 59.19\% |
 | 0 (speaker)  | 64.60\% | 59.62\% |
 | 0 (listener) | 63.10\% | 58.19\% |
-| 0 (ensemble) | 65.40\% | 60.73\% |
+| 0 (ensemble 0.3) | 65.40\% | 60.73\% |
 </td><td>
 
 | model | test A | test B |
 |--|--|--|
 | no_rank (speaker) | 55.97\% | 46.45\% |
 | no_rank (listener) | 58.68\% | 48.23\% |
-| no_rank (ensemble) | 59.80\% | 49.34\% |
+| no_rank (ensemble 0.3) | 59.80\% | 49.34\% |
 | 0 (speaker)  | 60.43\% | 48.74\% |
 | 0 (listener) | 58.68\% | 47.68\% |
-| 0 (ensemble) | 60.48\% | 49.36\% |
-</td></tr> </table>
-
-<table>
-<tr><th> Ground-truth Box </th><th> Detected Regions </th></tr>
-<tr><td>
-
-| model | testA | testB | 
-|--|--|--|
-| no_rank (speaker) | 57.46\% | 53.71\% |
-| no_rank (listener) | 63.34\% | 58.42\% |
-| no_rank (ensemble) | 64.02\% | 59.19\% |
-| 0 (speaker)  | 64.60\% | 59.62\% |
-| 0 (listener) | 63.10\% | 58.19\% |
-| 0 (ensemble) | 65.40\% | 60.73\% |
-</td><td>
-
-| model | testA | testB | 
-|--|--|--|
-| no_rank (speaker) | 55.97\% | 46.45\% |
-| no_rank (listener) | 58.68\% | 48.23\% |
-| no_rank (ensemble) | 59.80\% | 49.34\% |
-| 0 (speaker)  | 60.43\% | 48.74\% |
-| 0 (listener) | 58.68\% | 47.68\% |
-| 0 (ensemble) | 60.48\% | 49.36\% |
+| 0 (ensemble 0.3) | 60.48\% | 49.36\% |
 </td></tr> </table>
 
 Pretrained models on RefCOCOg (Google)
@@ -179,14 +170,29 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 * 0.2: ``th train.lua -dataset refcoco+_unc -id 0.2 -vis_rank_weight 1 -lang_rank_weight 0.5``
 * 0.4 (branch: refcocog2): ``th train.lua -dataset refcoco+_unc -id 0.4 -vis_rank_weight 1 -lang_rank_weight 1``
 
-| System | val | 
+<table>
+<tr><th> Ground-truth Box </th><th> Detected Regions(ssd) </th></tr>
+<tr><td>
+
+| model | val | 
 |:-------|:-----:|
 | no_rank (speaker) | 64.07\% | 
 | no_rank (listener) | 71.72\% | 
-| no_rank (ensemble) | 72.43\% | 
+| no_rank (ensemble 0.2) | 72.43\% | 
 | 0.2 (speaker)  | 72.63\% | 
 | 0.2 (listener) | 72.02\% | 
-| 0.2 (ensemble) | 74.19\% | 
+| 0.2 (ensemble 0.2) | 74.19\% | 
+</td><td>
+
+| model | val | 
+|:-------|:-----:|
+| no_rank (speaker) | 57.03\% | 
+| no_rank (listener) | 58.32\% | 
+| no_rank (ensemble 0.2) | 60.46\% | 
+| 0.4 (speaker)  | 59.51\% | 
+| 0.4 (listener) | 57.72\% | 
+| 0.4 (ensemble 0.2) | 59.84\% | 
+</td></tr></table>
 
 TODO
 ====
