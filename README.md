@@ -117,7 +117,7 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 |:-------|:-----:|:-------:|
 | no_rank (speaker) | 71.10\% | 74.01\% |
 | no_rank (listener) | 76.91\% | 80.10\% |
-| no_rank (ensemble) | 78.01\% | 80.65\% |
+| no_rank (ensemble 0.2) | 78.01\% | 80.65\% |
 | 0 (speaker)  | 78.95\% | 80.22\% |
 | 0 (listener) | 77.97\% | 79.86\% |
 | 0 (ensemble 0.2) | 80.08\% | 81.73\% |
