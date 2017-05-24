@@ -124,6 +124,7 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 * no_rank: ``th train.lua -dataset refcoco+_unc -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
 * 0: ``th train.lua -dataset refcoco+_unc -id 0 -vis_rank_weight 1 -lang_rank_weight 0``
 <table>
+<tr>
 <td>
 | Gd-box | testA | testB | 
 |:-------|:-----:|:-------:|
@@ -144,6 +145,7 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 | 0 (listener) | 58.68\% | 47.68\% |
 | 0 (ensemble) | 60.48\% | 49.36\% |
 </td>
+</tr>
 </table>
 
 Pretrained models on RefCOCOg (Google)
