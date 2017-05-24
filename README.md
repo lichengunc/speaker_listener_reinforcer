@@ -90,11 +90,13 @@ We provide proposals/detections for each dataset. Please follow the setup sectio
 Same as above, we need to do pre-processing and feature extraction for all the detected regions.
 * Run ``prepro_dets.py`` to add ``det_id`` and ``h5_id`` for each detected region, which will save ``dets.json`` into ``cache/prepro/refcoco_unc`` folder.
 ```shell
-python scripts/prepro_dets.py --dataset refcoco --splitBy unc --source data/detections/refcoco_frcn.json
+python scripts/prepro_dets.py --dataset refcoco --splitBy unc --source data/detections/refcoco_ssd.json
+python scripts/prepro_dets.py --dataset refcoco+ --splitBy unc --source data/detections/refcoco+_ssd.json
+python scripts/prepro_dets.py --dataset refcocog --splitBy google --source data/detections/refcocog_google_ssd.json
 ``` 
 * Extract features for each region:
 ```shell
-python scripts/extract_det_feats.lua -dataset refcoco_unc
+th scripts/extract_det_feats.lua -dataset refcoco_unc
 ```
 * Then we can evaluate the comprehension accuracies on detected objects/proposals:
 ```shell
