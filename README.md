@@ -38,21 +38,28 @@ th scripts/extract_img_feats.lua -dataset refcoco_unc -batch_size 50
 
 Training
 ====
-Make sure features are extracted - check if there exists ``ann_feats.h5`` and ``img_feats.h5`` in ``cache/feats/refcoco_unc/``, then run:
+Make sure features are extracted - check if there exists ``ann_feats.h5`` and ``img_feats.h5`` in ``cache/feats/refcoco_unc/``.
+
+First, let's do reward function training, the ``vlsim'' here means "visual-language similarity". The learned model will be used for evaluating similarity score in the reinforcer.
+```shell
+th scripts/train_vlsim.lua -dataset refcoco_unc -id vlsim_model_xxx
+```
+Then we start training the joint model
 ```shell
 th train.lua 
 ```
+
 We also provide options for training triplet loss.
 There are two types of triplet loss:
 * paired (ref_object, ref_expression) over unpaired (other_object, ref_expression), where other_object is mined from same image and perhaps same-category objects.
 ```shell
-th train.lua -vis_rank_weight 1
+th train.lua -vis_rank_weight 1 -vl_metric_model_id vlsim_model_xxx
 ```
 * paired (ref_object, ref_expression) over unpaired (ref_object, other_expression).
 ```shell
-th train.lua -lang_rank_weight 1
+th train.lua -lang_rank_weight 1 
 ```
-* Or you can train weith both triplet losses. Unfortunately, this seems working worse than "visual ranking" only for comprehension task.
+* Or you can train weith both triplet losses. 
 ```shell
 th train.lua -vis_rank_weight 1 -lang_rank_weight 0.2
 ```
