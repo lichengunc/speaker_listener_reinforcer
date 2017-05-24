@@ -1,6 +1,4 @@
-# visdif_emb_guide2_reinforce 
-
-Torch implementation of CVPR's referring expression paper
+Torch implementation of CVPR's referring expression paper "A Joint Speaker-Listener-Reinforcer Model for Referring Expressions"
 ==============================================
 This repository contains code for both referring expression generation and referring expression comprehension task,
 as described in this [paper](https://arxiv.org/abs/1612.09542).
