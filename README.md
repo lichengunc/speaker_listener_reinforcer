@@ -136,7 +136,7 @@ Pretrained models on RefCOCOg (Google)
 We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcocog_google.zip). Specifically they are trained using
 * no_rank: ``th train.lua -dataset refcocog_google -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
 * 0.2: ``th train.lua -dataset refcoco+_unc -id 0.2 -vis_rank_weight 1 -lang_rank_weight 0.5``
-* 0.4: ``th train.lua -dataset refcoco+_unc -id 0.4 -vis_rank_weight 1 -lang_rank_weight 1 (switch to refcocog branch)``
+* 0.4 (branch: refcocog2): ``th train.lua -dataset refcoco+_unc -id 0.4 -vis_rank_weight 1 -lang_rank_weight 1``
 
 | System | val | 
 |:-------|:-----:|
