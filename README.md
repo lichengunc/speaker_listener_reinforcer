@@ -125,12 +125,12 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 * 0: ``th train.lua -dataset refcoco+_unc -id 0 -vis_rank_weight 1 -lang_rank_weight 0``
 
 <table>
-<tr><th>Table 1 Heading 1 </th><th>Table 1 Heading 2</th></tr>
+<tr><th> Ground-truth Box </th><th> Detected Regions(ssd) </th></tr>
 <tr><td>
 
-|Table 1| Middle | Table 2|
+| model | test A | test B |
 |--|--|--|
-|a| not b|and c |
+| no_rank (speaker) | 57.46\% | 53.71\% |
 
 </td><td>
 
