@@ -123,8 +123,9 @@ Pretrained models on RefCOCO+ (UNC)
 We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcoco+_unc.zip). Specifically they are trained using
 * no_rank: ``th train.lua -dataset refcoco+_unc -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
 * 0: ``th train.lua -dataset refcoco+_unc -id 0 -vis_rank_weight 1 -lang_rank_weight 0``
-
-| System | testA | testB | 
+<table>
+<td>
+| Gd-box | testA | testB | 
 |:-------|:-----:|:-------:|
 | no_rank (speaker) | 57.46\% | 53.71\% |
 | no_rank (listener) | 63.34\% | 58.42\% |
@@ -132,6 +133,18 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 | 0 (speaker)  | 64.60\% | 59.62\% |
 | 0 (listener) | 63.10\% | 58.19\% |
 | 0 (ensemble) | 65.40\% | 60.73\% |
+</td>
+<td>
+| Det-box | testA | testB | 
+|:-------|:-----:|:-------:|
+| no_rank (speaker) | 55.97\% | 46.45\% |
+| no_rank (listener) | 58.68\% | 48.23\% |
+| no_rank (ensemble) | 59.80\% | 49.34\% |
+| 0 (speaker)  | 60.43\% | 48.74\% |
+| 0 (listener) | 58.68\% | 47.68\% |
+| 0 (ensemble) | 60.48\% | 49.36\% |
+</td>
+</table>
 
 Pretrained models on RefCOCOg (Google)
 ====
@@ -151,11 +164,8 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 
 TODO
 ====
-* Large-size Feature Extraction
-Note, I haven't figured out a way for extracting refclef_berkely's features as torch's hdf5 does not support partial writing. To be investigated...
-* automatic generation given image
+* automatic referring expression generation given just an image
 Current code only support referring expression geneneration given ground-truth bounding-box (with label). It shouldn't take too much effort to finish this. Just add some more functions inside DetsLoader.lua
-* upload all pre-trained models
 
 
 
