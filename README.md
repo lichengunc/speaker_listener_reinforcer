@@ -200,6 +200,18 @@ TODO
 Current code only support referring expression geneneration given ground-truth bounding-box (with label). It shouldn't take too much effort to finish this. Just add some more functions inside DetsLoader.lua
 
 
+Conclusion
+====
+The joint training of speaker and listener is helpful to each other.
+Though this is not reflected in this repo as we only show the joint training results, we refer readers to check our CVPR2017 [paper](https://arxiv.org/abs/1612.09542) to check this improvement over single speaker or single listener.
+Generally, ``+MMI'' gives additional boost on speaker, but this has no effect on listener.
+Overall the reinforcer has some effect but less than incorporating speaker.
+The joint training of all three modules make the best results so far.
+
+The difference between master and refcocog2 is we forbid sampling different-type objects (by stopping their gradient backpropagation) in refcocog2. The sampling of different-type objects is good for ground-truth comprehension for all three datasets, but make awkward performance on refcocog's detections. To be investigated...
+
+Future work involves larger dataset collection.
+
 
 
 
