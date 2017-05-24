@@ -142,8 +142,7 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 
 <table>
 <tr><th> Ground-truth Box </th><th> Detected Regions </th></tr>
-<tr>
-<td>
+<tr><td>
 | model | testA | testB | 
 |:-------|:-----:|:-------:|
 | no_rank (speaker) | 57.46\% | 53.71\% |
@@ -152,8 +151,7 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 | 0 (speaker)  | 64.60\% | 59.62\% |
 | 0 (listener) | 63.10\% | 58.19\% |
 | 0 (ensemble) | 65.40\% | 60.73\% |
-</td>
-<td>
+</td><td>
 | model | testA | testB | 
 |:-------|:-----:|:-------:|
 | no_rank (speaker) | 55.97\% | 46.45\% |
@@ -162,9 +160,7 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 | 0 (speaker)  | 60.43\% | 48.74\% |
 | 0 (listener) | 58.68\% | 47.68\% |
 | 0 (ensemble) | 60.48\% | 49.36\% |
-</td>
-</tr>
-</table>
+</td></tr> </table>
 
 Pretrained models on RefCOCOg (Google)
 ====
