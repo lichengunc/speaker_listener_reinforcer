@@ -151,6 +151,7 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 <table>
 <tr><th> Ground-truth Box </th><th> Detected Regions </th></tr>
 <tr><td>
+
 | model | testA | testB | 
 |--|--|--|
 | no_rank (speaker) | 57.46\% | 53.71\% |
@@ -160,6 +161,7 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 | 0 (listener) | 63.10\% | 58.19\% |
 | 0 (ensemble) | 65.40\% | 60.73\% |
 </td><td>
+
 | model | testA | testB | 
 |--|--|--|
 | no_rank (speaker) | 55.97\% | 46.45\% |
