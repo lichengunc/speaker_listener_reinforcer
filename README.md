@@ -3,6 +3,10 @@ Torch implementation of CVPR 2017's referring expression paper "A Joint Speaker-
 This repository contains code for both referring expression generation and referring expression comprehension task,
 as described in this [paper](https://arxiv.org/abs/1612.09542).
 
+Requirements and Depencies
+===
+[Torch](http://torch.ch/) with packages: [loadcaffe](https://github.com/szagoruyko/loadcaffe), [rnn](https://github.com/Element-Research/rnn), [hdf5](https://github.com/deepmind/torch-hdf5), [dpnn](https://github.com/Element-Research/dpnn)
+
 Setup
 ====
 * Clone the refer_baseline repository
