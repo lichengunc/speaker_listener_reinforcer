@@ -63,7 +63,7 @@ Evaluation
 ====
 * Referring expression comprehension on ground-truth labled objects:
 ```shell
-th eval_easy.lua -dataset refcoco_unc -split testA -mode 0
+th eval_easy.lua -dataset refcoco_unc -split testA -mode 0 -id xxx
 ```
 Note here ``mode = 0`` denotes evaluating using speaker model, ``model = 1`` denotes evaluating using listener model,
 and finally ``model = 2'' denotes using the ensemble of speaker and listener models.
@@ -98,7 +98,7 @@ python scripts/extract_det_feats.lua -dataset refcoco_unc
 ```
 * Then we can evaluate the comprehension accuracies on detected objects/proposals:
 ```shell
-th eval_dets.lua -dataset refcoco_unc -split testA
+th eval_dets.lua -dataset refcoco_unc -split testA -id xxx
 ```
 
 Pretrained models on RefCOCO (UNC)
@@ -116,6 +116,36 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 | 0 (listener) | 77.97\% | 79.86\% |
 | 0 (ensemble) | 80.08\% | 81.73\% |
 
+Pretrained models on RefCOCO+ (UNC)
+====
+We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcoco+_unc.zip). Specifically they are trained using
+* no_rank: ``th train.lua -dataset refcoco+_unc -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
+* 0: ``th train.lua -dataset refcoco+_unc -id 0 -vis_rank_weight 1 -lang_rank_weight 0``
+
+| System | testA | testB | 
+|:-------|:-----:|:-------:|
+| no_rank (speaker) | 57.46\% | 53.71\% |
+| no_rank (listener) | 63.34\% | 58.42\% |
+| no_rank (ensemble) | 64.02\% | 59.19\% |
+| 0 (speaker)  | 64.60\% | 59.62\% |
+| 0 (listener) | 63.10\% | 58.19\% |
+| 0 (ensemble) | 65.40\% | 60.73\% |
+
+Pretrained models on RefCOCOg (Google)
+====
+We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcocog_google.zip). Specifically they are trained using
+* no_rank: ``th train.lua -dataset refcocog_google -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
+* 0.2: ``th train.lua -dataset refcoco+_unc -id 0.2 -vis_rank_weight 1 -lang_rank_weight 0.5``
+* 0.4: ``th train.lua -dataset refcoco+_unc -id 0.4 -vis_rank_weight 1 -lang_rank_weight 1 (switch to refcocog branch)``
+
+| System | val | 
+|:-------|:-----:|
+| no_rank (speaker) | 64.07\% | 
+| no_rank (listener) | 71.72\% | 
+| no_rank (ensemble) | 72.43\% | 
+| 0.2 (speaker)  | 72.63\% | 
+| 0.2 (listener) | 72.02\% | 
+| 0.2 (ensemble) | 74.19\% | 
 
 TODO
 ====
