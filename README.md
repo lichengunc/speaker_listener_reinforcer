@@ -124,9 +124,10 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 * no_rank: ``th train.lua -dataset refcoco+_unc -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
 * 0: ``th train.lua -dataset refcoco+_unc -id 0 -vis_rank_weight 1 -lang_rank_weight 0``
 <table>
+<tr><th> Ground-truth Box </th><th> Detected Regions </th></tr>
 <tr>
 <td>
-| Gd-box | testA | testB | 
+| model | testA | testB | 
 |:-------|:-----:|:-------:|
 | no_rank (speaker) | 57.46\% | 53.71\% |
 | no_rank (listener) | 63.34\% | 58.42\% |
@@ -136,7 +137,7 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 | 0 (ensemble) | 65.40\% | 60.73\% |
 </td>
 <td>
-| Det-box | testA | testB | 
+| model | testA | testB | 
 |:-------|:-----:|:-------:|
 | no_rank (speaker) | 55.97\% | 46.45\% |
 | no_rank (listener) | 58.68\% | 48.23\% |
