@@ -122,7 +122,7 @@ We provided two pretrained models [here](http://tlberg.cs.unc.edu/licheng/referi
 <tr><th> Ground-truth Box </th><th> Detected Regions(ssd) </th></tr>
 <tr><td>
 
-| System | testA | testB | 
+| model | testA | testB | 
 |:-------|:-----:|:-------:|
 | no_rank (speaker) | 71.10\% | 74.01\% |
 | no_rank (listener) | 76.91\% | 80.10\% |
