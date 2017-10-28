@@ -18,7 +18,7 @@ The ``recursive`` will help also clone the [refer API](https://github.com/lichen
 Then go to ``pyutils/refer`` and run ``make``.
 * Download dataset and images, i.e., RefClef, RefCOCO, RefCOCO+, RefCOCOg from this [repo](https://github.com/lichengunc/refer.git), and save them into folder ``data/``.
 * Download VGG-16-layer [model](https://gist.github.com/ksimonyan/211839e770f7b538e2d8#file-readme-md), and save both proto and prototxt into foloder ``models/vgg``.
-* Download object proposals or object detections from [here](http://tlberg.cs.unc.edu/licheng/referit/data/detections.zip), and save the unzipped detections folder into data. We will use them for fully automatic comprehension task.
+* Download object proposals or object detections from [here](http://bvisionweb1.cs.unc.edu/licheng/referit/data/detections.zip), and save the unzipped detections folder into data. We will use them for fully automatic comprehension task.
 
 Preprocessing
 ====
