@@ -31,4 +31,4 @@ $COCO_PATH
 
 Note, each detections/xxx.json contains 
 ``{'dets': ['box': {x, y, w, h}, 'image_id', 'object_id', 'score']}``. The ``object_id`` and ``score`` might be missing, depending on what proposal/detection technique we are using.
-Download the detection/proposals from [here](http://tlberg.cs.unc.edu/licheng/referit/data/detections.zip)
+Download the detection/proposals from [here](http://bvisionweb1.cs.unc.edu/licheng/referit/data/detections.zip)
