@@ -179,6 +179,9 @@ while true do
 end
 print(string.format('accuracy = %.2f%%', accuracy/loss_evals*100))
 
+fd = io.open('easy_results.txt', 'a')
+fd:write(string.format('model_id[%s]mode[%s] on [%s][%s] is %.2f%%\n', opt.id, opt.mode, opt.dataset, opt.split, accuracy/loss_evals*100))
+
 -- save results
 if not utils.file_exists('cache/box') then os.execute('mkdir cache/box') end
 local cache_box_dataset_dir = path.join('cache/box', opt.dataset)
