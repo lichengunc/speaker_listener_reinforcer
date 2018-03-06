@@ -28,7 +28,7 @@ parser.add_argument('--refer_dir', default='new_data', help='data or new_data, r
 args = parser.parse_args()
 params = vars(args)
 
-# parse 
+# parse
 dataset_splitBy = params['dataset_splitBy']   # in Lua, we simply use dataset denoting detaset_splitBy
 i, j = dataset_splitBy.find('_'), dataset_splitBy.rfind('_')
 dataset = dataset_splitBy[:i]
@@ -37,7 +37,7 @@ file_name = params['model_id']+'_'+params['split']+'_beam'+params['beam_size']+'
 result_path = osp.join('cache', 'lang', dataset_splitBy, file_name)
 
 # load refer and refToEvaluation
-sys.path.insert(0, osp.join('pyutils', 'refer'))
+sys.path.insert(0, osp.join('pyutils', 'refer2'))
 from refer import REFER
 refer = REFER(params['refer_dir'], dataset, splitBy)
 

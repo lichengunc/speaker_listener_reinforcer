@@ -12,17 +12,18 @@ Setup
 * Clone the refer_baseline repository
 ```shell
 # Make sure to clone with --recursive
-git clone --recursive https://github.com/lichengunc/visdif_emb_guide2_reinforce.git
+git clone --recursive https://github.com/lichengunc/speaker_listener_reinforcer.git
 ```
-The ``recursive`` will help also clone the [refer API](https://github.com/lichengunc/refer) repo.
-Then go to ``pyutils/refer`` and run ``make``.
-* Download dataset and images, i.e., RefClef, RefCOCO, RefCOCO+, RefCOCOg from this [repo](https://github.com/lichengunc/refer.git), and save them into folder ``data/``.
-* Download VGG-16-layer [model](https://gist.github.com/ksimonyan/211839e770f7b538e2d8#file-readme-md), and save both proto and prototxt into foloder ``models/vgg``.
-* Download object proposals or object detections from [here](http://bvisionweb1.cs.unc.edu/licheng/referit/data/detections.zip), and save the unzipped detections folder into data. We will use them for fully automatic comprehension task.
+The ``recursive`` will help also clone the [refer API](https://github.com/lichengunc/refer) repo and the new [refer2 API](https://github.com/lichengunc/refer2).
+Then go to ``pyutils/refer2`` and run ``make``.
+* Download and unzip dataset and images, i.e., RefClef, RefCOCO, RefCOCO+, RefCOCOg by following the instructions in this [folder](https://github.com/lichengunc/refer2/tree/master/data) of the refer2 repo, and save them into folder ``new_data/``.
+* Download VGG-16-layer [model](https://gist.github.com/ksimonyan/211839e770f7b538e2d8#file-readme-md), and save both the caffe model (should be linked to by the "caffemodel_url") and the prototxt (should be included in the gist itself, titled ``VGG*.prototxt``) into folder ``models/vgg``.
+* Download and unzip object proposals or object detections from [here](http://bvision.cs.unc.edu/licheng/referit/data/detections.zip), and save the unzipped detections folder into data. We will use them for fully automatic comprehension task.
 
 Preprocessing
 ====
 We need to save the information of subset of MSCOCO for the use of referring expression.
+
 By calling ``prepro.py``, we will save data.json and data.h5 into ``cache/prepro``
 ```Shell
 python prepro.py --dataset refcoco --splitBy unc
@@ -61,9 +62,9 @@ th train.lua -vis_rank_weight 1
 ```
 * paired (ref_object, ref_expression) over unpaired (ref_object, other_expression).
 ```shell
-th train.lua -lang_rank_weight 1 
+th train.lua -lang_rank_weight 1
 ```
-* Or you can train weith both triplet losses. 
+* Or you can train weith both triplet losses.
 ```shell
 th train.lua -vis_rank_weight 1 -lang_rank_weight 0.2
 ```
@@ -102,7 +103,7 @@ Same as above, we need to do pre-processing and feature extraction for all the d
 python scripts/prepro_dets.py --dataset refcoco --splitBy unc --source data/detections/refcoco_ssd.json
 python scripts/prepro_dets.py --dataset refcoco+ --splitBy unc --source data/detections/refcoco+_ssd.json
 python scripts/prepro_dets.py --dataset refcocog --splitBy google --source data/detections/refcocog_google_ssd.json
-``` 
+```
 * Extract features for each region:
 ```shell
 th scripts/extract_det_feats.lua -dataset refcoco_unc
@@ -114,7 +115,7 @@ th eval_dets.lua -dataset refcoco_unc -split testA -id xxx
 
 Pretrained models on RefCOCO (UNC)
 ====
-We provided two pretrained models [here](http://bvisionweb1.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcoco_unc.zip). Specifically they are trained using
+We provided two pretrained models [here](http://bvision.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcoco_unc.zip). Download and unzip them into the ``models/`` directory to use them. Specifically they are trained using
 * no_rank: ``th train.lua -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
 * 0: ``th train.lua -id 0 -vis_rank_weight 1 -lang_rank_weight 0.1``
 
@@ -122,7 +123,7 @@ We provided two pretrained models [here](http://bvisionweb1.cs.unc.edu/licheng/r
 <tr><th> Ground-truth Box </th><th> Detected Regions(ssd) </th></tr>
 <tr><td>
 
-| model | testA | testB | 
+| model | testA | testB |
 |:-------|:-----:|:-------:|
 | no_rank (speaker) | 71.10\% | 74.01\% |
 | no_rank (listener) | 76.91\% | 80.10\% |
@@ -144,7 +145,7 @@ We provided two pretrained models [here](http://bvisionweb1.cs.unc.edu/licheng/r
 
 Pretrained models on RefCOCO+ (UNC)
 ====
-We provided two pretrained models [here](http://bvisionweb1.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcoco+_unc.zip). Specifically they are trained using
+We provided two pretrained models [here](http://bvision.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcoco+_unc.zip). Download and unzip them into the ``models/`` directory to use them. Specifically they are trained using
 * no_rank: ``th train.lua -dataset refcoco+_unc -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
 * 0: ``th train.lua -dataset refcoco+_unc -id 0 -vis_rank_weight 1 -lang_rank_weight 0``
 
@@ -174,7 +175,7 @@ We provided two pretrained models [here](http://bvisionweb1.cs.unc.edu/licheng/r
 
 Pretrained models on RefCOCOg (Google)
 ====
-We provided two pretrained models [here](http://bvisionweb1.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcocog_google.zip). Specifically they are trained using
+We provided two pretrained models [here](http://bvision.cs.unc.edu/licheng/referit/visdif_emb_guide2_reinforce/models/refcocog_google.zip). Download and unzip them into the ``models/`` directory to use them. Specifically they are trained using
 * no_rank: ``th train.lua -dataset refcocog_google -id no_rank -vis_rank_weight 0 -lang_rank_weight 0``
 * 0.2: ``th train.lua -dataset refcoco+_unc -id 0.2 -vis_rank_weight 1 -lang_rank_weight 0.5``
 * 0.4 (branch: refcocog2): ``th train.lua -dataset refcoco+_unc -id 0.4 -vis_rank_weight 1 -lang_rank_weight 1``
@@ -183,24 +184,24 @@ We provided two pretrained models [here](http://bvisionweb1.cs.unc.edu/licheng/r
 <tr><th> Ground-truth Box </th><th> Detected Regions(ssd) </th></tr>
 <tr><td>
 
-| model | val | 
+| model | val |
 |:-------|:-----:|
-| no_rank (speaker) | 64.07\% | 
-| no_rank (listener) | 71.72\% | 
-| no_rank (ensemble 0.2) | 72.43\% | 
-| 0.2 (speaker)  | 72.63\% | 
-| 0.2 (listener) | 72.02\% | 
-| 0.2 (ensemble 0.2) | 74.19\% | 
+| no_rank (speaker) | 64.07\% |
+| no_rank (listener) | 71.72\% |
+| no_rank (ensemble 0.2) | 72.43\% |
+| 0.2 (speaker)  | 72.63\% |
+| 0.2 (listener) | 72.02\% |
+| 0.2 (ensemble 0.2) | 74.19\% |
 </td><td>
 
-| model | val | 
+| model | val |
 |:-------|:-----:|
-| no_rank (speaker) | 57.03\% | 
-| no_rank (listener) | 58.32\% | 
-| no_rank (ensemble 0.2) | 60.46\% | 
-| 0.4 (speaker)  | 59.51\% | 
-| 0.4 (listener) | 57.72\% | 
-| 0.4 (ensemble 0.2) | 59.84\% | 
+| no_rank (speaker) | 57.03\% |
+| no_rank (listener) | 58.32\% |
+| no_rank (ensemble 0.2) | 60.46\% |
+| 0.4 (speaker)  | 59.51\% |
+| 0.4 (listener) | 57.72\% |
+| 0.4 (ensemble 0.2) | 59.84\% |
 </td></tr></table>
 
 TODO
@@ -220,15 +221,3 @@ The joint training of all three modules make the best results so far.
 The difference between master and refcocog2 is we forbid sampling different-type objects (by stopping their gradient backpropagation) in refcocog2. The sampling of different-type objects is good for ground-truth comprehension for all three datasets, but make awkward performance on refcocog's detections. To be investigated...
 
 Future work involves larger dataset collection.
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,7 +2,7 @@
 Preprocess a raw json dataset into hdf5 and json files for use in misc/DataLoader.lua
 
 Input: refer loader
-Output: json file has 
+Output: json file has
 - refs: 	  [{ref_id, ann_id, box, image_id, split, category_id, sent_ids}]
 - images: 	  [{image_id, ref_ids, file_name, width, height, h5_id}]
 - anns: 	  [{ann_id, category_id, image_id, box, h5_id}]
@@ -59,8 +59,8 @@ def build_vocab(refer, params):
 	for sent_id, tokens in sentToTokens.items():
 		final = [w if word2count[w] > count_thr else 'UNK' for w in tokens]
 		sentToFinal[sent_id] = final
-	
-	return vocab, sentToFinal 
+
+	return vocab, sentToFinal
 
 
 def check_sentLength(sentToFinal):
@@ -103,7 +103,7 @@ def encode_captions(sentences, wtoi, params):
 			if j < max_length:
 				zseq_L[h5_id-1, start_ix+j] = wtoi[w]
 				seqz_L[h5_id-1, j] = wtoi[w]
-	# return 
+	# return
 	return seqz_L, zseq_L
 
 
@@ -111,7 +111,7 @@ def check_encoded_labels(sentences, seqz_L, zseq_L, itow):
 	for sent in sentences:
 		# print gd-truth
 		print('gd : %s' % (' '.join(sent['tokens'])))
-		# decode seqz and zseq 
+		# decode seqz and zseq
 		h5_id = sent['h5_id']
 		seqz = seqz_L[h5_id-1].tolist()
 		sent = ' '.join([itow[w] for w in seqz if w != 0])
@@ -183,7 +183,7 @@ def main(params):
 		os.mkdir(osp.join('models', dataset+'_'+splitBy))  # we also mkdir model/dataset_splitBy here!
 
 	# load refer
-	sys.path.insert(0, osp.join(ROOT_DIR, 'pyutils/refer'))
+	sys.path.insert(0, osp.join(ROOT_DIR, 'pyutils/refer2'))
 	from refer import REFER
 	refer = REFER(data_root, dataset, splitBy)
 
@@ -198,14 +198,14 @@ def main(params):
 	# prepare refs, images, anns, sentences
 	# and write json
 	refs, images, anns, sentences = prepare_json(refer, sentToFinal, params)
-	json.dump({'refs': refs, 
-			   'images': images, 
-			   'anns': anns, 
-			   'sentences': sentences, 
-			   'ix_to_word': itow, 
+	json.dump({'refs': refs,
+			   'images': images,
+			   'anns': anns,
+			   'sentences': sentences,
+			   'ix_to_word': itow,
 			   'word_to_ix': wtoi,
 			   'ix_to_cat': refer.Cats
-			   }, 
+			   },
 		open(osp.join('cache/prepro', dataset+'_'+splitBy, params['output_json']), 'w'))
 	print '%s written.' % osp.join('cache/prepro', params['output_json'])
 
