@@ -16,9 +16,9 @@ git clone --recursive https://github.com/lichengunc/speaker_listener_reinforcer.
 ```
 The ``recursive`` will help also clone the [refer API](https://github.com/lichengunc/refer) repo and the new [refer2 API](https://github.com/lichengunc/refer2).
 Then go to ``pyutils/refer2`` and run ``make``.
-* Download and unzip dataset and images, i.e., RefClef, RefCOCO, RefCOCO+, RefCOCOg by following the instructions in this [folder](https://github.com/lichengunc/refer2/tree/master/data) of the refer2 repo, and save them into folder ``new_data/``.
+* Download and unzip dataset and images, i.e., RefClef, RefCOCO, RefCOCO+, RefCOCOg by following the instructions in this [folder](https://github.com/lichengunc/refer2/tree/master/data) of the refer2 repo, and save them into the folder ``new_data/``.
 * Download VGG-16-layer [model](https://gist.github.com/ksimonyan/211839e770f7b538e2d8#file-readme-md), and save both the caffe model (should be linked to by the "caffemodel_url") and the prototxt (should be included in the gist itself, titled ``VGG*.prototxt``) into folder ``models/vgg``.
-* Download and unzip object proposals or object detections from [here](http://bvision.cs.unc.edu/licheng/referit/data/detections.zip), and save the unzipped detections folder into data. We will use them for fully automatic comprehension task.
+* Download and unzip object proposals or object detections from [here](http://bvision.cs.unc.edu/licheng/referit/data/detections.zip), and save the unzipped detections folder into ``new_data/``. We will use them for fully automatic comprehension task.
 
 Preprocessing
 ====
@@ -96,7 +96,7 @@ For more details, check ``eval_rerank.py``
 
 Fully automatic comprehension using detection/proposal
 ====
-We provide proposals/detections for each dataset. Please follow the setup section to download the ``detections.zip`` and unzip it into ``data`` folder.
+We provide proposals/detections for each dataset. Please follow the setup section to download the ``detections.zip`` and unzip it into the ``new_data/`` folder.
 Same as above, we need to do pre-processing and feature extraction for all the detected regions.
 * Run ``prepro_dets.py`` to add ``det_id`` and ``h5_id`` for each detected region, which will save ``dets.json`` into ``cache/prepro/refcoco_unc`` folder.
 ```shell

@@ -228,7 +228,7 @@ if __name__ == '__main__':
 	parser.add_argument('--output_h5', default='data.h5', help='output h5 file')
 
 	# options
-	parser.add_argument('--data_root', default='data', type=str, help='data folder containing images and four datasets.')
+	parser.add_argument('--data_root', default='new_data', type=str, help='data folder containing images and four datasets.')
 	parser.add_argument('--dataset', default='refcoco', type=str, help='refcoco/refcoco+/refcocog')
 	parser.add_argument('--splitBy', default='unc', type=str, help='unc/google')
 	parser.add_argument('--max_length', type=int, help='max length of a caption')  # refcoco 10, refclef 10, refcocog 20

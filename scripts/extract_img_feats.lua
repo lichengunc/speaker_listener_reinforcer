@@ -54,9 +54,9 @@ local loader = DataLoader{data_h5 = data_h5, data_json = data_json}
 -- Image Directory
 local IMAGE_DIR
 if string.match(opt.dataset, 'coco') then
-	IMAGE_DIR = 'data/images/mscoco/images/train2014'
+	IMAGE_DIR = 'new_data/images/mscoco/images/train2014'
 elseif string.match(opt.dataset, 'clef') then
-	IMAGE_DIR = 'data/images/saiapr_tc-12'
+	IMAGE_DIR = 'new_data/images/saiapr_tc-12'
 else
 	print('No image directory prepared for ' .. opt.dataset)
 	os.exit()
