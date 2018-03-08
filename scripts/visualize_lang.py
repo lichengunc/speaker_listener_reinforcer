@@ -29,7 +29,7 @@ split = params['split']
 
 # load refer
 ROOT_DIR = './'
-sys.path.insert(0, osp.join(ROOT_DIR, 'pyutils', 'refer'))
+sys.path.insert(0, osp.join(ROOT_DIR, 'pyutils', 'refer2'))
 REFER_DIR = osp.join(ROOT_DIR, 'data')
 from refer import REFER
 refer = REFER(REFER_DIR, dataset, splitBy)
